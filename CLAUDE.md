@@ -14,6 +14,8 @@
 
 ## Stav projektu (2026-11-18)
 
+- **2026-11-18 zadány 4 historické kalibrace ze skenů** (Testo 425, Testo 417, sonda Testo 0635 1570, ProHood PH731), všechny propadlé; +3 skupiny (Anemometr termický, Sonda Testo 0635 1570, Balometr), +4 přístroje, +4 kalibrace (SQL přes konektor, technik prázdný). PDF nahraje správce v appce (Upravit kalibraci). Poznámka: `cislo_protokolu` je NOT NULL, prázdné = `''`.
+
 - **Čištění repa a přesun do `vm73-prace` hotové (2026-11-18, domácí PC, kroky 1–4):**
   - **Krok 3 hotový:** repo převedené do organizace → **`vm73-prace/kalibrace`** (veřejné), Pages **https://vm73-prace.github.io/kalibrace/** (stará adresa `vm73.github.io/kalibrace` vrací 404), všech 7 secrets `KALIBRACE_*` se přeneslo, workflows `kontrola.yml` a `keepalive.yml` aktivní, ruční běh `kontrola.yml` s `dry_run` zelený. Odkazy v README, CLAUDE.md, `scripts/kontrola.py` (odkaz do appky v e-mailu) a `sql/001_init.sql` (komentář schématu; v DB zůstává starý komentář, migrace se znovu nespouštěla) přepsané; `ZADANI.md` záměrně beze změny. **Verze 7**, cache `kalibrace-v7`. Testy 48/21/75 OK.
   - **iPhone: appku je potřeba znovu přidat na plochu** z nové adresy (starou ikonu smazat, stará adresa už nefunguje).

@@ -3,7 +3,7 @@
 Evidence měřicích přístrojů HVAC servisu: platnost kalibrací (semafor), skupiny zastupitelných přístrojů,
 kalibrační protokoly (PDF / foto) a e-mailová upozornění před koncem platnosti.
 
-- **Appka:** https://vm73.github.io/kalibrace/ (ukázková data bez přihlášení: [`?demo=1`](https://vm73.github.io/kalibrace/?demo=1))
+- **Appka:** https://vm73-prace.github.io/kalibrace/ (ukázková data bez přihlášení: [`?demo=1`](https://vm73-prace.github.io/kalibrace/?demo=1))
 - **Stack:** vanilla HTML/CSS/JS bez build kroku (PWA), Supabase (sdílený projekt „servisní záznamy“, schéma `kalibrace`),
   GitHub Pages, GitHub Actions + Python pro upozornění.
 - Pravidla vývoje a stav projektu: [`CLAUDE.md`](CLAUDE.md), původní zadání: [`ZADANI.md`](ZADANI.md).
@@ -25,7 +25,7 @@ kalibrační protokoly (PDF / foto) a e-mailová upozornění před koncem platn
 ### Diagnostika
 
 - Číslo verze je v patičce a v Nastavení (`verze N`); po nasazení musí odpovídat `VERZE` v `app.js`.
-- `?debug=1` (např. https://vm73.github.io/kalibrace/?debug=1) zapne panel s logem: každá odpověď Supabase se statusem
+- `?debug=1` (např. https://vm73-prace.github.io/kalibrace/?debug=1) zapne panel s logem: každá odpověď Supabase se statusem
   a chybou (bez tokenů), chyby JS v červeném rámečku. Při potížích pošli jeho obsah.
 - Když se nová verze neprojeví: zavřít a znovu otevřít appku (service worker načítá síť první, cache jen offline).
 
@@ -39,9 +39,9 @@ kalibrační protokoly (PDF / foto) a e-mailová upozornění před koncem platn
 
   ```powershell
   try {
-    $r = Invoke-WebRequest 'https://vm73.github.io/kalibrace/app.js' -UseBasicParsing
+    $r = Invoke-WebRequest 'https://vm73-prace.github.io/kalibrace/app.js' -UseBasicParsing
     ($r.Content -split "`n" | Select-String 'var VERZE').ToString()
-    gh api repos/VM73/kalibrace/pages/builds/latest --jq '.status, .updated_at'
+    gh api repos/vm73-prace/kalibrace/pages/builds/latest --jq '.status, .updated_at'
   } catch {
     "Status: $($_.Exception.Response.StatusCode.value__)"; $_.ErrorDetails.Message
   }

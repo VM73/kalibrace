@@ -1,5 +1,5 @@
 /* Evidence kalibrací – appka (vanilla JS). Výpočty jsou v calc.js, ukázková data v demo.js. */
-var VERZE = 6;
+var VERZE = 7;
 var Q = new URLSearchParams(location.search);
 var DEBUG = Q.get('debug') === '1';
 var DEMO = Q.get('demo') === '1'; // ?demo=1 = ukázková data v paměti, bez Supabase

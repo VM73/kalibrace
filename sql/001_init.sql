@@ -8,7 +8,7 @@ begin;
 
 -- ---------- Schéma ----------
 create schema kalibrace;
-comment on schema kalibrace is 'Evidence kalibrací – VM73/kalibrace';
+comment on schema kalibrace is 'Evidence kalibrací – vm73-prace/kalibrace';
 
 -- Smí uživatel do appky? Stejný vzor jako ostatní appky ve sdíleném projektu.
 create function kalibrace.smi() returns boolean

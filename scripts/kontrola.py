@@ -26,7 +26,7 @@ import urllib.request
 from datetime import date, datetime, timedelta
 from email.message import EmailMessage
 
-APP_URL = 'https://vm73.github.io/kalibrace/'
+APP_URL = 'https://vm73-prace.github.io/kalibrace/'
 # Konzole Windows (cp1250) neumí všechny znaky – výpis nesmí shodit skript
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(errors='replace')

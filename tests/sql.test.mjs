@@ -91,7 +91,7 @@ test('správce dostal kalibrace, ostatní hodnoty zůstaly; jiné profily beze z
     [V]: ['app1', 'app2', 'app3', 'kalibrace'], [B]: ['kalibrace'], [C]: ['app1'], [D]: ['kalibrace']
   });
   const k = (await db.query(`select obj_description('kalibrace'::regnamespace) k`)).rows[0].k;
-  assert.equal(k, 'Evidence kalibrací – VM73/kalibrace');
+  assert.equal(k, 'Evidence kalibrací – vm73-prace/kalibrace');
 });
 
 let gV, pV;

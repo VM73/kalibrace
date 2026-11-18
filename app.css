@@ -1,0 +1,131 @@
+:root {
+  /* Paleta iOS jako appka Servis (VM73/Servis) */
+  --blue: #007aff; --green: #34c759; --orange: #ff9500; --red: #ff3b30; --indigo: #5856d6; --grey: #8e8e93;
+  /* Čitelné odstíny pro malý text a výplně s bílým textem (kontrast ≥ 4,4:1) */
+  --blue-t: #0062cc; --green-t: #248a3d; --orange-t: #b25000; --red-t: #d70015;
+  --fill-green: #248a3d; --fill-orange: #b25000; --fill-red: #d70015; --fill-blue: #0062cc; --fill-grey: #6c6c70;
+  --blue-bg: #e5f1ff; --red-bg: #ffe5e7; --grey-bg: #ececf0; --seg-on: #fff;
+  --bg: #f2f2f7; --card: #fff; --text: #000; --text2: #6c6c70; --sep: #c6c6c8; --accent: var(--blue-t);
+  --radius: 12px;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --blue: #0a84ff; --green: #30d158; --orange: #ff9f0a; --red: #ff453a; --indigo: #5e5ce6; --grey: #8e8e93;
+    --blue-t: #409cff; --green-t: #30d158; --orange-t: #ff9f0a; --red-t: #ff453a;
+    --blue-bg: #0f2846; --red-bg: #3f1614; --grey-bg: #2c2c2e; --seg-on: #636366;
+    --bg: #000; --card: #1c1c1e; --text: #fff; --text2: #98989f; --sep: #38383a;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body {
+  font: 17px/1.35 -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%; padding-bottom: env(safe-area-inset-bottom);
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--accent); }
+a.btn, a.btn-text { text-decoration: none; }
+
+/* Horní lišta */
+.bar {
+  position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: calc(env(safe-area-inset-top) + 4px) max(12px, calc((100% - 760px) / 2 + 12px)) 4px;
+  background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+.bar .spacer { flex: 1; }
+.btn-text { background: none; border: 0; color: var(--accent); padding: 8px 4px; cursor: pointer; font-size: 17px; white-space: nowrap; }
+.btn-text:disabled { opacity: .4; }
+main { max-width: 760px; margin: 0 auto; padding: 0 16px 32px; }
+h1 { font-size: 34px; line-height: 1.15; font-weight: 700; margin: 4px 0 8px; letter-spacing: .2px; }
+h2 { font-size: 13px; font-weight: 400; text-transform: uppercase; color: var(--text2); margin: 24px 16px 6px; }
+
+/* Souhrn (statistický řádek) a přepínač */
+.souhrn { color: var(--text2); margin: 0 0 12px; font-size: 15px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--card); border-radius: var(--radius); padding: 12px 4px; margin: 0 0 12px; text-align: center; }
+.stats > div + div { border-left: .5px solid var(--sep); }
+.stats .l { font-size: 11px; font-weight: 600; letter-spacing: .4px; color: var(--text2); white-space: nowrap; }
+.stats .n { font-size: 30px; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.stats .ok .n { color: var(--green-t); } .stats .brzy .n { color: var(--orange-t); } .stats .nedostatek .n { color: var(--red-t); }
+.stats .nula .n { color: var(--text2); }
+.btn-novy { display: block; width: 100%; margin: 0 0 12px; }
+.seg { display: flex; background: var(--grey-bg); border-radius: 9px; padding: 2px; margin: 0 0 8px; }
+.seg button { flex: 1; border: 0; background: none; padding: 6px 4px; border-radius: 7px; font-size: 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--seg-on); box-shadow: 0 1px 3px rgba(0,0,0,.15); font-weight: 600; }
+.toggle-row { display: flex; align-items: center; justify-content: flex-end; gap: 8px; color: var(--text2); font-size: 14px; margin: 4px 0; }
+
+/* Seskupený seznam */
+.group { background: var(--card); border-radius: var(--radius); overflow: hidden; }
+.group > * + * { border-top: .5px solid var(--sep); }
+.ghead { padding: 12px 16px; display: flex; gap: 10px; align-items: flex-start; }
+.ghead .dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 5px; flex: none; }
+.ghead .t { font-weight: 600; }
+.ghead .sub { font-size: 14px; color: var(--text2); }
+.ghead .next { font-size: 14px; margin-top: 2px; color: var(--orange-t); }
+.ghead .next.narade { color: var(--text2); }
+.row .next { font-size: 14px; font-weight: 600; color: var(--orange-t); }
+.dot.prazdna { background: var(--grey); }
+.dot.zelena { background: var(--green); } .dot.oranzova { background: var(--orange); } .dot.cervena { background: var(--red); }
+
+.row { display: flex; align-items: center; gap: 12px; padding: 10px 16px; min-height: 60px; cursor: pointer; text-decoration: none; color: inherit; }
+.row:active { background: var(--grey-bg); }
+.thumb { width: 44px; height: 44px; border-radius: 10px; flex: none; background: var(--grey-bg); display: grid; place-items: center; overflow: hidden; color: var(--text2); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb svg { width: 28px; height: 28px; }
+/* Ikony v barevných dlaždicích podle typu (bez oranžové a červené – ty patří stavu) */
+.thumb[data-typ] { color: #fff; }
+.thumb[data-typ="anemometr"] { background: #007aff; }
+.thumb[data-typ="balometr"] { background: #5856d6; }
+.thumb[data-typ="detektor_uniku"] { background: #008299; }
+.thumb[data-typ="dif_manometr"] { background: #8944ab; }
+.thumb[data-typ="jiny"] { background: #636366; }
+.row .info { flex: 1; min-width: 0; }
+.row .t { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row .sub { font-size: 14px; color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row.tlumeny { opacity: .6; }
+.chev { color: var(--sep); font-size: 20px; flex: none; }
+
+/* Štítky stavu: malé, vyplněné, bílé tučné verzálky + text vedle */
+.stav { display: flex; align-items: center; gap: 6px; margin-top: 3px; min-width: 0; }
+.stav .txt { font-size: 14px; color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tag { display: inline-block; font-size: 11px; line-height: 1.5; font-weight: 700; letter-spacing: .4px; padding: 1px 6px; border-radius: 5px; white-space: nowrap; flex: none; color: #fff; }
+.tag.platna { background: var(--fill-green); }
+.tag.brzy { background: var(--fill-orange); }
+.tag.propadla, .tag.bez { background: var(--fill-red); }
+.tag.na_kalibraci { background: var(--fill-blue); }
+.tag.vyrazeno, .tag.tlumeny { background: var(--fill-grey); }
+
+/* Detail a formuláře */
+.kv { display: flex; justify-content: space-between; gap: 12px; padding: 11px 16px; }
+.kv span:first-child { color: var(--text2); flex: none; }
+.kv span:last-child { text-align: right; overflow-wrap: anywhere; }
+.hero { display: flex; gap: 14px; align-items: center; margin: 8px 0 4px; }
+.hero .thumb { width: 72px; height: 72px; border-radius: 14px; }
+.hero .thumb svg { width: 44px; height: 44px; }
+.hero h1 { font-size: 26px; margin: 0; overflow-wrap: anywhere; }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.btn { border: 0; border-radius: 999px; padding: 11px 14px; background: var(--blue-bg); color: var(--blue-t); font-weight: 600; cursor: pointer; text-align: center; }
+.btn.primary { background: #007aff; color: #fff; }
+.btn.danger { background: var(--red-bg); color: var(--red-t); }
+.btn.confirm { background: var(--fill-red); color: #fff; }
+.btn.full { grid-column: 1 / -1; }
+.field { display: flex; align-items: center; gap: 12px; padding: 6px 16px; min-height: 44px; }
+.field label { flex: 0 0 40%; color: var(--text); font-size: 16px; }
+.field input, .field select, .field textarea { flex: 1; min-width: 0; border: 0; background: none; padding: 6px 0; text-align: right; font-size: 16px; }
+.field textarea { text-align: left; resize: vertical; min-height: 60px; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; }
+.field input[type=file] { font-size: 14px; }
+.field.check label { flex: 1; }
+.field input[type=checkbox] { flex: none; width: 22px; height: 22px; accent-color: var(--accent); }
+.hint { font-size: 13px; color: var(--text2); margin: 6px 16px 0; }
+.empty { text-align: center; color: var(--text2); padding: 24px 16px; }
+.banner { background: var(--blue-bg); color: var(--blue-t); font-size: 14px; padding: 8px 12px; border-radius: 10px; margin: 8px 0; }
+footer { text-align: center; color: var(--text2); font-size: 13px; margin: 24px 0 8px; }
+.err { color: var(--red-t); font-size: 14px; margin: 8px 16px; }
+
+/* Debug panel */
+#debug { display: none; position: fixed; left: 8px; right: 8px; bottom: 8px; max-height: 35vh; overflow: auto; z-index: 100;
+  background: #111; color: #9f9; font: 12px/1.4 ui-monospace, Menlo, Consolas, monospace; padding: 8px; border-radius: 8px; border: 2px solid transparent; white-space: pre-wrap; }
+#debug.on { display: block; }
+#debug.chyba { border-color: #ff3b30; }
+#debug .e { color: #ff6b6b; }

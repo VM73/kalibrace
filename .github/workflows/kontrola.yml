@@ -1,0 +1,58 @@
+# Denní kontrola kalibrací a e-mailové upozornění (scripts/kontrola.py).
+# Cron 5:00 UTC = 6:00 v zimě / 7:00 v létě (pražský čas). Ručně: Actions → Kontrola kalibrací → Run workflow.
+# Repo je veřejné: log nesmí obsahovat výrobní čísla, jména ani e-maily (skript je nevypisuje).
+name: Kontrola kalibrací
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Jen vypsat důvody a předmět, e-mail neposílat'
+        type: boolean
+        default: true
+      test_email:
+        description: 'Poslat jeden zkušební e-mail bez ohledu na pravidla (má přednost před dry_run)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  kontrola:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Závislosti
+        run: pip install -r requirements.txt
+      - name: Testy výpočtů a pravidel
+        run: python -m unittest discover -s tests -p "test_*.py"
+      - name: Kontrola a e-mail
+        env:
+          KALIBRACE_SUPABASE_URL: ${{ secrets.KALIBRACE_SUPABASE_URL }}
+          KALIBRACE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.KALIBRACE_SUPABASE_PUBLISHABLE_KEY }}
+          KALIBRACE_NOTIFY_TOKEN: ${{ secrets.KALIBRACE_NOTIFY_TOKEN }}
+          KALIBRACE_SMTP_HOST: ${{ secrets.KALIBRACE_SMTP_HOST }}
+          KALIBRACE_SMTP_PORT: ${{ secrets.KALIBRACE_SMTP_PORT }}
+          KALIBRACE_SMTP_USER: ${{ secrets.KALIBRACE_SMTP_USER }}
+          KALIBRACE_SMTP_PASSWORD: ${{ secrets.KALIBRACE_SMTP_PASSWORD }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          TEST_EMAIL: ${{ inputs.test_email }}
+        run: |
+          set -o pipefail
+          ARG=""
+          if [ "$TEST_EMAIL" = "true" ]; then ARG="--test-email"; elif [ "$DRY_RUN" = "true" ]; then ARG="--dry-run"; fi
+          python scripts/kontrola.py $ARG 2>&1 | tee kontrola.log
+      - name: Log při chybě
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: kontrola-log
+          path: kontrola.log
+          retention-days: 7

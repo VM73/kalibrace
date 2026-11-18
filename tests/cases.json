@@ -1,0 +1,185 @@
+{
+  "dnes": "2026-11-14",
+  "pristroje": [
+    { "nazev": "platná", "pristroj": {}, "platnost_do": "2027-04-06", "ocekavano": { "stav": "platna", "zbyva": 143, "okno": 44, "text": "zbývá 143 dní" } },
+    { "nazev": "hranice okna – poslední zelený den", "pristroj": {}, "platnost_do": "2026-12-29", "ocekavano": { "stav": "platna", "zbyva": 45, "text": "zbývá 45 dní" } },
+    { "nazev": "hranice okna – první oranžový den", "pristroj": {}, "platnost_do": "2026-12-28", "ocekavano": { "stav": "brzy", "zbyva": 44, "text": "zbývá 44 dní" } },
+    { "nazev": "zbývají 3 dny", "pristroj": {}, "platnost_do": "2026-11-17", "ocekavano": { "stav": "brzy", "zbyva": 3, "text": "zbývají 3 dny" } },
+    { "nazev": "zbývá 1 den", "pristroj": {}, "platnost_do": "2026-11-15", "ocekavano": { "stav": "brzy", "zbyva": 1, "text": "zbývá 1 den" } },
+    { "nazev": "den vypršení (0)", "pristroj": {}, "platnost_do": "2026-11-14", "ocekavano": { "stav": "brzy", "zbyva": 0, "text": "vyprší dnes" } },
+    { "nazev": "propadlá před 1 dnem", "pristroj": {}, "platnost_do": "2026-11-13", "ocekavano": { "stav": "propadla", "zbyva": -1, "text": "propadlá před 1 dnem" } },
+    { "nazev": "propadlá před 12 dny", "pristroj": {}, "platnost_do": "2026-11-02", "ocekavano": { "stav": "propadla", "zbyva": -12, "text": "propadlá před 12 dny" } },
+    { "nazev": "bez kalibrace", "pristroj": {}, "platnost_do": null, "ocekavano": { "stav": "bez", "zbyva": null, "text": "bez kalibrace" } },
+    { "nazev": "na kalibraci", "pristroj": { "stav": "na_kalibraci", "odeslano_dne": "2026-11-03" }, "platnost_do": "2026-11-20", "ocekavano": { "stav": "na_kalibraci", "zbyva": 6, "text": "na kalibraci od 3. 11." } },
+    { "nazev": "vyřazeno", "pristroj": { "stav": "vyrazeno" }, "platnost_do": "2027-04-06", "ocekavano": { "stav": "vyrazeno", "text": "vyřazeno" } },
+    { "nazev": "vlastní předstih 10 + lab 14 = okno 24", "pristroj": { "predstih_dni": 10, "doba_v_lab_dni": 14 }, "platnost_do": "2026-12-09", "ocekavano": { "stav": "platna", "zbyva": 25, "okno": 24 } },
+    { "nazev": "výchozí předstih z nastavení 60", "pristroj": {}, "nastaveni": { "predstih_dni_vychozi": 60 }, "platnost_do": "2027-01-01", "ocekavano": { "stav": "brzy", "zbyva": 48, "okno": 74 } }
+  ],
+  "skupiny": [
+    {
+      "nazev": "3× Testo, jeden platný → zelená, další = nejstarší propadlý",
+      "min_platnych": 1,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2026-05-01" },
+        { "id": "B", "platnost_do": "2026-08-01" },
+        { "id": "C", "platnost_do": "2027-06-01" }
+      ],
+      "ocekavano": { "stav": "zelena", "dalsi": "A", "tlumene": ["A", "B"], "vyzva": "na_rade", "odeslat_do": "2027-04-18" }
+    },
+    {
+      "nazev": "jediný platný vyprší za 20 dní → oranžová",
+      "min_platnych": 1,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2026-05-01" },
+        { "id": "B", "platnost_do": "2026-08-01" },
+        { "id": "C", "platnost_do": "2026-12-04" }
+      ],
+      "ocekavano": { "stav": "oranzova", "zbyva": 20, "dalsi": "A", "tlumene": [], "vyzva": "posli", "odeslat_do": "2026-10-21" }
+    },
+    {
+      "nazev": "žádný platný → červená, kus bez kalibrace má přednost",
+      "min_platnych": 1,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2026-05-01" },
+        { "id": "B", "platnost_do": null }
+      ],
+      "ocekavano": { "stav": "cervena", "zbyva": null, "dalsi": "B", "tlumene": [], "vyzva": "posli", "odeslat_do": null }
+    },
+    {
+      "nazev": "kus na kalibraci se nepočítá a není další na kalibraci",
+      "min_platnych": 1,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2026-05-01", "stav": "na_kalibraci", "odeslano_dne": "2026-11-03" },
+        { "id": "B", "platnost_do": "2026-08-01" },
+        { "id": "C", "platnost_do": "2027-06-01" }
+      ],
+      "ocekavano": { "stav": "zelena", "zbyva": 199, "dalsi": "B", "tlumene": ["B"], "vyzva": null, "odeslat_do": "2027-04-18" }
+    },
+    {
+      "nazev": "min 2 – oba platné, jeden brzy → oranžová",
+      "min_platnych": 2,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2027-06-01" },
+        { "id": "B", "platnost_do": "2026-12-10" }
+      ],
+      "ocekavano": { "stav": "oranzova", "zbyva": 26, "dalsi": "B", "tlumene": [], "vyzva": "posli", "odeslat_do": "2026-10-27" }
+    },
+    {
+      "nazev": "vyřazený kus se ignoruje",
+      "min_platnych": 1,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2027-06-01", "stav": "vyrazeno" },
+        { "id": "B", "platnost_do": "2026-10-01" }
+      ],
+      "ocekavano": { "stav": "cervena", "dalsi": "B", "tlumene": [], "vyzva": "posli" }
+    },
+    {
+      "nazev": "zelená skupina o 1 kusu → na řadě s datem odeslání",
+      "min_platnych": 1,
+      "pristroje": [{ "id": "A", "platnost_do": "2027-04-06" }],
+      "ocekavano": { "stav": "zelena", "zbyva": 143, "dalsi": "A", "tlumene": [], "vyzva": "na_rade", "odeslat_do": "2027-02-21" }
+    },
+    {
+      "nazev": "červená, jediný kus je na kalibraci → žádná výzva",
+      "min_platnych": 1,
+      "pristroje": [{ "id": "A", "platnost_do": "2026-05-01", "stav": "na_kalibraci", "odeslano_dne": "2026-11-03" }],
+      "ocekavano": { "stav": "cervena", "dalsi": null, "tlumene": [], "vyzva": null, "odeslat_do": null }
+    },
+    {
+      "nazev": "prázdná skupina (bez přístrojů) → šedá, bez výzvy",
+      "min_platnych": 1,
+      "pristroje": [],
+      "ocekavano": { "stav": "prazdna", "zbyva": null, "dalsi": null, "tlumene": [], "vyzva": null, "odeslat_do": null }
+    },
+    {
+      "nazev": "jen vyřazené kusy → prázdná",
+      "min_platnych": 1,
+      "pristroje": [{ "id": "A", "platnost_do": "2027-06-01", "stav": "vyrazeno" }],
+      "ocekavano": { "stav": "prazdna", "dalsi": null, "tlumene": [], "vyzva": null }
+    },
+    {
+      "nazev": "jediný kus na kalibraci → není prázdná, ale červená",
+      "min_platnych": 1,
+      "pristroje": [{ "id": "A", "platnost_do": "2026-05-01", "stav": "na_kalibraci", "odeslano_dne": "2026-11-03" }],
+      "ocekavano": { "stav": "cervena", "dalsi": null, "vyzva": null, "tlumene": [] }
+    },
+    {
+      "nazev": "každý kus platný: všechny 3 zelené → zelená, min = 3",
+      "min_platnych": 1, "vsechny_platne": true,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2027-06-01" },
+        { "id": "B", "platnost_do": "2027-03-01" },
+        { "id": "C", "platnost_do": "2027-01-15" }
+      ],
+      "ocekavano": { "stav": "zelena", "min": 3, "zbyva": 62, "dalsi": "C", "tlumene": [], "vyzva": "na_rade", "odeslat_do": "2026-12-02" }
+    },
+    {
+      "nazev": "každý kus platný: jeden propadlý → červená (min_platnych 1 se ignoruje)",
+      "min_platnych": 1, "vsechny_platne": true,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2027-06-01" },
+        { "id": "B", "platnost_do": "2026-10-01" }
+      ],
+      "ocekavano": { "stav": "cervena", "min": 2, "zbyva": null, "dalsi": "B", "tlumene": [], "vyzva": "posli" }
+    },
+    {
+      "nazev": "každý kus platný: jeden brzy vyprší → oranžová",
+      "min_platnych": 1, "vsechny_platne": true,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2027-06-01" },
+        { "id": "B", "platnost_do": "2026-12-10" }
+      ],
+      "ocekavano": { "stav": "oranzova", "min": 2, "zbyva": 26, "dalsi": "B", "tlumene": [], "vyzva": "posli" }
+    },
+    {
+      "nazev": "každý kus platný: kus na kalibraci se počítá jako neplatný → červená",
+      "min_platnych": 1, "vsechny_platne": true,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2027-06-01" },
+        { "id": "B", "platnost_do": "2027-06-01", "stav": "na_kalibraci", "odeslano_dne": "2026-11-10" }
+      ],
+      "ocekavano": { "stav": "cervena", "min": 2, "dalsi": "A", "tlumene": [], "vyzva": "posli" }
+    },
+    {
+      "nazev": "každý kus platný: vyřazený kus se nepočítá → zelená",
+      "min_platnych": 1, "vsechny_platne": true,
+      "pristroje": [
+        { "id": "A", "platnost_do": "2027-06-01" },
+        { "id": "B", "platnost_do": "2026-01-01", "stav": "vyrazeno" }
+      ],
+      "ocekavano": { "stav": "zelena", "min": 1, "dalsi": "A", "tlumene": [], "vyzva": "na_rade" }
+    }
+  ],
+  "souhrn_skupin": [
+    { "nazev": "po skupinách, prázdná (šedá) skupina se nepočítá",
+      "skupiny": [{ "stav": "zelena", "aktivnich": 3 }, { "stav": "oranzova", "aktivnich": 1 }, { "stav": "cervena", "aktivnich": 2 }, { "stav": "zelena", "aktivnich": 1 }, { "stav": "prazdna", "aktivnich": 0 }],
+      "ocekavano": { "ok": 2, "brzy": 1, "nedostatek": 1 } }
+  ],
+  "upozorneni": [
+    { "nazev": "zbývá právě okno (44) → poslat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-12-28" }] }], "poslat": true },
+    { "nazev": "zbývá 45, sobota → neposílat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-12-29" }] }], "poslat": false },
+    { "nazev": "zbývá 14 → poslat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-11-28" }] }], "poslat": true },
+    { "nazev": "zbývá 13 → neposílat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-11-27" }] }], "poslat": false },
+    { "nazev": "zbývá 7 → poslat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-11-21" }] }], "poslat": true },
+    { "nazev": "zbývá 1 → poslat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-11-15" }] }], "poslat": true },
+    { "nazev": "vyprší dnes (0) → poslat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-11-14" }] }], "poslat": true },
+    { "nazev": "zelená skupina, jiný kus má 14 dní (rotace) → neposílat", "dnes": "2026-11-14",
+      "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2027-06-01" }, { "id": "B", "platnost_do": "2026-11-28" }] }], "poslat": false },
+    { "nazev": "oranžová skupina v pondělí → týdenní souhrn", "dnes": "2026-11-16", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-12-06" }] }], "poslat": true },
+    { "nazev": "oranžová skupina v sobotu mimo práh → neposílat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-12-06" }] }], "poslat": false },
+    { "nazev": "červená skupina v pondělí → poslat", "dnes": "2026-11-16", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-10-01" }] }], "poslat": true },
+    { "nazev": "červená skupina v sobotu → neposílat", "dnes": "2026-11-14", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-10-01" }] }], "poslat": false },
+    { "nazev": "prázdná skupina v pondělí → neposílat", "dnes": "2026-11-16", "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2026-10-01", "stav": "vyrazeno" }] }], "poslat": false },
+    { "nazev": "zelená skupina s propadlým kusem v pondělí → neposílat", "dnes": "2026-11-16",
+      "skupiny": [{ "pristroje": [{ "id": "A", "platnost_do": "2027-06-01" }, { "id": "B", "platnost_do": "2026-10-01" }] }], "poslat": false },
+    { "nazev": "min 2: druhý kus má 7 dní → poslat", "dnes": "2026-11-14",
+      "skupiny": [{ "min_platnych": 2, "pristroje": [{ "id": "A", "platnost_do": "2027-06-01" }, { "id": "B", "platnost_do": "2026-11-21" }] }], "poslat": true },
+    { "nazev": "každý kus platný: nejhorší kus má 14 dní → poslat", "dnes": "2026-11-14",
+      "skupiny": [{ "vsechny_platne": true, "pristroje": [{ "id": "A", "platnost_do": "2027-06-01" }, { "id": "B", "platnost_do": "2026-11-28" }] }], "poslat": true }
+  ],
+  "pridej_mesice": [
+    { "datum": "2025-11-14", "mesicu": 12, "vysledek": "2026-11-14" },
+    { "datum": "2026-01-31", "mesicu": 1, "vysledek": "2026-02-28" },
+    { "datum": "2027-12-15", "mesicu": 24, "vysledek": "2029-12-15" }
+  ]
+}

@@ -14,10 +14,14 @@
 
 ## Stav projektu (2026-11-18)
 
-- **ROZPRACOVÁNO (2026-11-18, domácí PC) – čištění repa a přesun do `vm73-prace`:**
+- **Čištění repa a přesun do `vm73-prace` hotové (2026-11-18, domácí PC, kroky 1–4):**
+  - **Krok 3 hotový:** repo převedené do organizace → **`vm73-prace/kalibrace`** (veřejné), Pages **https://vm73-prace.github.io/kalibrace/** (stará adresa `vm73.github.io/kalibrace` vrací 404), všech 7 secrets `KALIBRACE_*` se přeneslo, workflows `kontrola.yml` a `keepalive.yml` aktivní, ruční běh `kontrola.yml` s `dry_run` zelený. Odkazy v README, CLAUDE.md, `scripts/kontrola.py` (odkaz do appky v e-mailu) a `sql/001_init.sql` (komentář schématu; v DB zůstává starý komentář, migrace se znovu nespouštěla) přepsané; `ZADANI.md` záměrně beze změny. **Verze 7**, cache `kalibrace-v7`. Testy 48/21/75 OK.
+  - **iPhone: appku je potřeba znovu přidat na plochu** z nové adresy (starou ikonu smazat, stará adresa už nefunguje).
+  - **Supabase Redirect URLs:** prázdné, kalibrace je nepotřebuje (přihlášení heslem); přidat `https://vm73-prace.github.io/kalibrace/**` až při zavedení obnovy hesla e-mailem. V Supabase se při přesunu nic neměnilo.
+  - **Pracovní PC:** `git remote set-url origin https://github.com/vm73-prace/kalibrace.git`, `git fetch`, `git reset --hard origin/main` (historie byla přepsaná, starý `main` nejde sloučit). Interní podklady: `git clone https://github.com/vm73-prace/kalibrace-interni.git C:\Projekty\kalibrace-interni`.
+  - **Pravidlo: interní údaje (SMTP host, UUID správce, názvy ostatních appek ve sdíleném Supabase, náklady) jen v `kalibrace-interni`**, nikdy ve veřejném repu, commitech ani logech Actions.
   - **Interní údaje jen v privátním repu `vm73-prace/kalibrace-interni`** (lokálně `C:\Projekty\kalibrace-interni`: INTERNI.md, NAKLADY.md, `sql/lokalni/`, `kalibrace-historie.bundle` = plná historie do 18. 11. 2026, 19 commitů + větev `rozpracovano`).
   - **Krok 2 hotový (2026-11-18):** historie zkrácená na 1 kořenový commit (force push `main`), větev `rozpracovano` smazaná (její poznámka převzatá níže), `git log --all -S` pro SMTP host i UUID = 0.
-  - **Další: krok 3** (přesun do `vm73-prace`, Pages, secrets, workflows, Supabase URL, odkazy, verze cache) až po „OK přesun“; **krok 4** CLAUDE.md + NAKLADY.md, commit obou rep.
   - Krok 1 (shrnutí): SMTP host a UUID správce jsou pryč ze stromu (`<UUID_SPRAVCE>` v `sql/001_init.sql`, `001_rollback.sql`, `sql/README.md`; test dosazuje fiktivní `11111111-…`). `sql/lokalni/` je v `.gitignore`. Názvy ostatních appek v Supabase jsou nahrazené neutrálním textem (v testu `app1–3`, bucket `app1-fotky`), „Vladan“ → „správce“, technik v demu „Tomáš“. `ZADANI.md` zůstává (u opravneni není v interním repu). Testy 48/21/75 OK.
 - **Pauza (2026-11-17), kde navázat** (převzato z větve `rozpracovano`): nasazená verze 6, ověřená na iPhonu. Zbývá: (1) správce na iPhonu přidá kalibraci s PDF nebo fotkou protokolu a vyzkouší **Otevřít** a **Sdílet protokol** (kritérium MVP „do 10 s“); (2) **Přidat na plochu** (start bez lišty Safari, ikona visačky); (3) pořadí skupin v sekci Skupiny (prázdné „Detektory úniku chladiva“ jsou nad anemometry – jen data, ne kód); (4) později výměna SMTP za firemní účet (4 secrets, README); (5) v2 podle „Mimo rozsah v1“. Při potížích `?debug=1` a log.
 

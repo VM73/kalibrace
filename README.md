@@ -47,6 +47,27 @@ kalibrační protokoly (PDF / foto) a e-mailová upozornění před koncem platn
   }
   ```
 
+## Jak přidat / vyměnit správce
+
+Appka má zatím jediného uživatele; data patří účtu ve sloupci `owner` (RLS: `owner = auth.uid()` a `kalibrace.smi()`).
+Konkrétní UUID, e-maily a hotové skripty patří jen do interních podkladů, ne do tohoto repa.
+
+1. **Účet:** Supabase → *Authentication → Users → Add user* (e-mail + heslo; registrace v appce je vypnutá).
+2. **Přístup:** v `public.profily` musí mít účet aktivní profil a v poli `aplikace` hodnotu `'kalibrace'`
+   (přidat k existujícím hodnotám, ostatní appky ve sdíleném projektu nechat beze změny). Tím je **přidání** správce hotové;
+   nový účet začíná s prázdnou evidencí.
+3. **Výměna (převod dat ze starého účtu):**
+   - Novým účtem se do appky **nepřihlašovat**, dokud data nejsou převedená (uložení Nastavení by založilo druhý řádek `nastaveni`).
+   - **Soubory:** skriptem zkopírovat obsah složky `<staré uid>/` v bucketech `kalibrace-protokoly` a `kalibrace-fotky`
+     do `<nové uid>/` (přihlášení oběma účty, bez service_role; ověřit velikost a SHA-256, staré soubory zatím nemazat).
+   - **Databáze:** jeden SQL příkaz s CTE (složené cizí klíče `(…, owner)` nejsou odložitelné, postupné updaty po tabulkách selžou):
+     změnit `owner` ve `skupiny`, `pristroje`, `kalibrace`, `nastaveni` a prefix `<uid>/` v `protokol_path` a `foto_path`.
+     Předem kontrola, že nový účet nemá žádné řádky; potom kontrola počtů (starý účet 0). Připravit rollback a vše
+     otestovat na PGlite. Token upozornění jde s řádkem `nastaveni`, appka ani skript upozornění se nemění.
+   - **Ověření:** přihlásit se novým účtem (PC, iPhone), otevřít fotku a protokol; ruční běh `kontrola.yml` s `dry_run`.
+   - **Úklid:** starému účtu odebrat `'kalibrace'` z `profily.aplikace` a smazat jeho složky v obou bucketech
+     (vč. souborů, na které DB neodkazuje). Po smazání už rollback nejde.
+
 ## E-mailová upozornění
 
 - Workflow [`.github/workflows/kontrola.yml`](.github/workflows/kontrola.yml) denně v 5:00 UTC (6:00 v zimě / 7:00 v létě)
